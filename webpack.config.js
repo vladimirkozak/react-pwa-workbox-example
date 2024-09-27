@@ -1,40 +1,37 @@
-const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
-const path = require( 'path' );
-const Dotenv = require( 'dotenv-webpack' );
-const { InjectManifest } = require( 'workbox-webpack-plugin' );
-const CopyPlugin = require( 'copy-webpack-plugin' );
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const Dotenv = require('dotenv-webpack');
+const { InjectManifest } = require('workbox-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const webpackPlugins = [
-  new HtmlWebpackPlugin( {
-    template: path.resolve( __dirname, 'public/index.html' ),
+  new HtmlWebpackPlugin({
+    template: path.resolve(__dirname, 'public/index.html'),
     filename: 'index.html',
-  } ),
-  new Dotenv( {
+  }),
+  new Dotenv({
     path: './.env', // Path to .env file (this is the default)
     systemvars: true,
-  } ),
-  new CopyPlugin( {
+  }),
+  new CopyPlugin({
     patterns: [
       { from: './src/favicon.ico', to: '' },
       { from: './src/manifest.json', to: '' },
       { from: './src/logo192.png', to: '' },
       { from: './src/logo512.png', to: '' },
     ],
-  } ),
-];
-
-if ( 'production' === process.env.NODE_ENV ) {
-  webpackPlugins.push( new InjectManifest( {
+  }),
+  new InjectManifest({
     swSrc: './src/src-sw.js',
     swDest: 'sw.js',
-  } ) );
-}
+  })
+];
 
 module.exports = {
   context: __dirname,
   entry: './src/index.js',
   output: {
-    path: path.resolve( __dirname, 'dist' ),
+    path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
     publicPath: '/',
   },
@@ -49,7 +46,7 @@ module.exports = {
       },
       {
         test: /\.css?$/,
-        use: [ 'style-loader', 'css-loader' ],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(png|j?g|svg|gif)?$/,
